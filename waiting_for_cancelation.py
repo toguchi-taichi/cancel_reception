@@ -63,3 +63,6 @@ def Auto_waiting_for_cancellation(driver):
     else:
         requests.post(line_api_url, headers=headers, data={'message': '予約は埋まっています'})
     
+
+if __name__ == '__main__':
+    main()
