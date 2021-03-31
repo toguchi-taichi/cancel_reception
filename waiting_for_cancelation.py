@@ -46,22 +46,17 @@ def Auto_waiting_for_cancellation(driver):
     driver.find_element_by_class_name("bgc-orange").click()
     driver.find_element_by_class_name("submit-btn").click()
 
+    driver.find_element_by_xpath('//span[text()="10:30"]/..').click()
+    driver.find_element_by_class_name("submit-btn").click()
+
     message = {'message': ''}
 
-    if driver.find_elements_by_class_name("card-color01"):
-        for i in driver.find_elements_by_class_name("card-color01"):
-            if i.find_element_by_class_name("sel-time").text == '10:30':
-                i.click()
-                break
-        driver.find_element_by_class_name("submit-btn").click()
+    message['message'] = driver.find_element_by_class_name('data-date').text + '\n'
+    message['message'] = message['message'] + driver.find_element_by_class_name('data-time02').text + '\n'
+    message['message'] = message['message'] + driver.find_element_by_class_name('data-naiyo02').text
 
-        message['message'] = driver.find_element_by_class_name('data-date').text + '\n'
-        message['message'] = message['message'] + driver.find_element_by_class_name('data-time02').text + '\n'
-        message['message'] = message['message'] + driver.find_element_by_class_name('data-naiyo02').text
-
-        requests.post(line_api_url, headers=headers, data=message)
-    else:
-        requests.post(line_api_url, headers=headers, data={'message': '予約は埋まっています'})
+    requests.post(line_api_url, headers=headers, data=message)
+    
     
 
 if __name__ == '__main__':
